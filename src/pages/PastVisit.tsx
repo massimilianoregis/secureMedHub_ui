@@ -120,20 +120,20 @@ const Page: React.FC = () => {
             {visit.type=='today'&&
               
                 <IonRow>
-                  <IonCol size='1'>
+                  <IonCol size='3' className='ion-text-end'>
                     <IonChip>   
                       <IonIcon icon={caretForwardOutline} color="clear"></IonIcon>             
                         <IonLabel>{moment(visit.when).format('MMM DD')}</IonLabel>
                     </IonChip>
                   </IonCol>
-                  <IonCol size='11'>
+                  <IonCol size='9'>
                   <IonItemDivider><IonLabel>Today</IonLabel></IonItemDivider>
                   </IonCol>
                 </IonRow>
               }
             {visit.type!='today'&&
             <IonRow>
-              <IonCol size='1'>
+              <IonCol size='3' className='ion-text-end'>
 
                 <br/>
                 <IonChip>
@@ -143,7 +143,7 @@ const Page: React.FC = () => {
                 </IonChip> 
 
               </IonCol>
-              <IonCol size='11'>
+              <IonCol size='9'>
               
               <IonCard key='index'>
                 <IonCardHeader>
