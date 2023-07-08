@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { archiveOutline, archiveSharp, bandageOutline, bandageSharp, bookmarkOutline, eyedropOutline, eyedropSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, speedometerOutline, speedometerSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import './Menu.css';
 
 interface AppPage {
@@ -23,40 +23,28 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Inbox',
-    url: '/page/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    title: 'Past visit',
+    url: '/page/PastVisit',
+    iosIcon: speedometerOutline,
+    mdIcon: speedometerSharp
   },
   {
-    title: 'Outbox',
-    url: '/page/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    title: 'Test Result',
+    url: '/page/TestResult',
+    iosIcon: eyedropOutline,
+    mdIcon: eyedropSharp
   },
   {
-    title: 'Favorites',
-    url: '/page/Favorites',
+    title: 'Medication',
+    url: '/page/Medication',
+    iosIcon: bandageOutline,
+    mdIcon: bandageSharp
+  },
+  {
+    title: 'Next visit',
+    url: '/page/NextVisit',
     iosIcon: heartOutline,
     mdIcon: heartSharp
-  },
-  {
-    title: 'Archived',
-    url: '/page/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
-  },
-  {
-    title: 'Trash',
-    url: '/page/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/page/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
   }
 ];
 
