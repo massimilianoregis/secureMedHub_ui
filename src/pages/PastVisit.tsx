@@ -2,27 +2,35 @@ import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonCard, IonCar
 import { useParams } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
 import './Page.css';
-import { businessOutline, calendarNumberOutline, callOutline, caretForwardOutline, readerOutline } from 'ionicons/icons';
+import { businessOutline, calendarNumberOutline, callOutline, caretForwardOutline, closeOutline, readerOutline, refreshOutline } from 'ionicons/icons';
 import moment from 'moment-timezone';
 
 const Page: React.FC = () => {
 
   const { name } = useParams<{ name: string; }>();
+  interface Procedure{
+    number:number,
+    method:string,
+    consent:string,
+    post_care_instruction:string
+  }
   interface Assessment {
     name:string,
-    where:string,
+    where?:string,
     expectations?:string,
     note:string,
     prescriptions?:string[]
     referrals?:string[],
     contact_office_if?:string
+    procedures?:Procedure[]
   }
   interface Visit {
     when: Date;
     where?: string; //onsite/telephone/video
     type: string; //optometry/today
     who?: string;
-    assessment?:Assessment[]    
+    assessment?:Assessment[],
+    conclusion?:string
   }
   
   const visits: Visit[] = [
@@ -46,31 +54,61 @@ const Page: React.FC = () => {
       when: new Date(2023,4,31),
       where: 'onsite',
       type: 'optometry',
-      who: 'NOOR AL-HASSAN OD'
+      who: 'NOOR AL-HASSAN OD',
+      conclusion:`next routine dilation exam`,
+      assessment:[{
+        name: 'Refractive error OU',
+        note: `Patient educated on the importance of routine dilation and its applications towards patient's health (to fully assess for ocular pathologies) and side effects of dilation drops (blurred vision, light sensitivity).  Patient to schedule routine DFE next available, will bring driver.
+ 
+        RTC 1 month routine DFE or sooner PRN
+        Return precautions discussed.`,
+      }]
     },
     {
       when: new Date(2023,4,24),
       where: 'tel',
       type: 'plastic surgery',
-      who: 'ASHLEY MARIE BROWN MD'
+      who: 'ASHLEY MARIE BROWN MD',
+      conclusion:'Patient to be scheduled for minors procedure. Request submitted',
+      assessment:[
+        {
+          name:'Multiple bilateral skin tags',
+          where:'eyelid',
+          note:`- We discussed observation, operative, non-operative treatment options. 
+          - We have decided to proceed with excision.<br/>
+          - The procedure and post operative cares and restrictions were discussed. They understand that there will be a scar. Recovery and post procedure restrictions were discussed as well.
+          
+          Excision of bilateral periorbital skin tags
+          For removal of lesions
+          Risks, benefits, and alternatives were discussed. Risks include, but are not limited to the following:  bleeding, infection, damage to adjacent structures (including nerves, arteries/vessels, organs, the eye), poor healing, poor scar, poor cosmetic result, recurrence or incomplete excision, pain, stroke, heart attack,clot/deep vein thrombosis/pulmonary embolus, death, possible need for further surgery. No guarantee given. Questions were sought and answered.`
+        }
+      ]
+
     },
     {
       when: new Date(2023,4,23),
       where: 'onsite',
       type: 'dermatology',
       who: 'TIEN VIET NGUYEN MD',
+      conclusion :'Return in about 2 months (around 7/23/2023).',
       assessment:[{
           name:'ANAL WART',
           where: 'R perianal area',
           note:`Condyloma acuminatum (genital warts) can be treated with retinoids, Aldara, salicylic acid preparations or cryotherapy. There may be off-label treatment options as well that have been reported in the literature to yield good results.`,
-          expectations:`Warts are cauliflower-like bumps caused by viral infections. They may resemble skin tags in the genital area. They can be spread through direct contact and usually resolve with treatment. But they may recur, typically in times of immunosuppression or stress. With genital warts, please disclose with your current and prior partner(s) to the best of your ability so that they can seek medical evaluation and treatment (if they are also affected). In women, untreated cervical/genital warts can increase the risk of mucocutaneous cancer, so it is important to communicate this part of your history clearly, openly, and in a timely manner.
-          Contact Office if: The warts spread, or recur despite treatment.`
+          expectations:`Warts are cauliflower-like bumps caused by viral infections. They may resemble skin tags in the genital area. They can be spread through direct contact and usually resolve with treatment. But they may recur, typically in times of immunosuppression or stress. With genital warts, please disclose with your current and prior partner(s) to the best of your ability so that they can seek medical evaluation and treatment (if they are also affected). In women, untreated cervical/genital warts can increase the risk of mucocutaneous cancer, so it is important to communicate this part of your history clearly, openly, and in a timely manner.`,
+          contact_office_if:`The warts spread, or recur despite treatment.`,
+          procedures:[{
+            number:1,
+            method: 'cryotherapy',
+            consent:`The patient's consent was obtained including but not limited to risks of crusting, scabbing, blistering, scarring, darker or lighter pigmentary change, recurrence, incomplete removal and infection.`,
+            post_care_instruction:`Patient should wear sun protection when outside and avoid picking at any of the treated lesions. Patient may apply a thick emollient (e.g., Vaseline or Aquaphor ointment) to crusted or scabbing areas; otherwise, keeping the treated areas clean and dry works best in many cases.`
+          }]
         },{
           name:'IRRITANT CONTACT DERMATITIS',
           where:'penis',
           note: `Irritant Contact Dermatitis Skin Care: Avoiding harsh chemicals, prolonged water exposure and wearing gloves can all help improve irritant contact dermatitis. Applying moisturizers regularly will also help reduce irritation. Topical steroids can help in more severe cases.`,
-          expectations: `Irritant Contact dermatitis can persist unless contact with irritants in the environment are eliminated. Sometimes, patch testing is necessary to exclude an allergic contact dermatitis.
-          Contact office if: Your dermatitis worsens or fails to improve despite several weeks of treatment.`,
+          expectations: `Irritant Contact dermatitis can persist unless contact with irritants in the environment are eliminated. Sometimes, patch testing is necessary to exclude an allergic contact dermatitis.`,          
+          contact_office_if: `Your dermatitis worsens or fails to improve despite several weeks of treatment.`,
           prescriptions:[
             'TACROLIMUS 0.1 % TOP OINT'
           ]
@@ -154,6 +192,7 @@ const Page: React.FC = () => {
                   <IonCardSubtitle>{visit.who}</IonCardSubtitle>
                 </IonCardHeader>
                 <IonCardContent>
+                
                 <IonAccordionGroup>
                 {visit.assessment?.map((assessment,index)=>
                   <IonAccordion value={assessment.name}>
@@ -167,30 +206,47 @@ const Page: React.FC = () => {
                         <IonText color="secondary"><h2>Expectations</h2></IonText>
                         <p>{assessment.expectations}</p>
                       </>}
-                      {assessment.prescriptions&&<>
-                        <IonText color="secondary"><h2>Prescriptions</h2></IonText>
-                        {assessment.prescriptions?.join()}
-                      </>}
                       {assessment.contact_office_if&&<>
                         <IonText color="secondary"><h2>Contact office if</h2></IonText>
                         <p>{assessment.contact_office_if}</p>
                       </>}
+                      {assessment.prescriptions&&<>
+                        <IonText color="secondary"><h2>Prescriptions</h2></IonText>
+                        {assessment.prescriptions?.join()}
+                      </>}                      
                       {assessment.referrals&&<>
                         <IonText color="secondary"><h2>Referrals</h2></IonText>
                         {assessment.referrals?.join()}
+                      </>}                      
+                      {assessment.procedures&&<>
+                        <IonText color="secondary"><h2>Procedures</h2></IonText>
+                        {assessment.procedures?.map(procedure=><>          
+                          <IonCard>
+                              <IonCardHeader>
+                                <IonCardTitle>{procedure.method} #{procedure.number}</IonCardTitle>
+                              </IonCardHeader>
+                              <IonCardContent>
+                                <li>{procedure.consent}</li>
+                                <li>{procedure.post_care_instruction}</li>
+                              </IonCardContent>
+                          </IonCard>                                          
+                          
+                        </>)}
                       </>}
                       </div>
                   </IonAccordion>
                 )}
                 </IonAccordionGroup>
-                
 
+                {visit.conclusion&&<p>{visit.conclusion}</p>}
+
+                {visit.when> new Date()&&
+                <>
+                  <IonButton fill='clear' color='danger'><IonIcon icon={closeOutline} slot='start'/>Cancel</IonButton>
+                  <IonButton fill='clear' color='warning'><IonIcon icon={refreshOutline} slot='start'/>Reschedule</IonButton>                
+                </>}
                 {visit.when< new Date()&&
-                <IonList>                  
-                  <IonItem>
-                    <IonIcon slot='start' icon={readerOutline}></IonIcon>                   
-                    <IonLabel>View Notes</IonLabel>
-                  </IonItem>
+                <IonList>                                    
                   <IonItem lines='none'>
                     <IonIcon slot='start' icon={calendarNumberOutline}></IonIcon>                   
                     <IonLabel>View After Visit</IonLabel>

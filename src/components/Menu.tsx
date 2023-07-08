@@ -23,28 +23,22 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Past visit',
+    title: 'Visits',
     url: '/page/PastVisit',
-    iosIcon: speedometerOutline,
-    mdIcon: speedometerSharp
+    iosIcon: heartOutline,
+    mdIcon: heartSharp
   },
   {
-    title: 'Test Result',
+    title: 'Tests',
     url: '/page/TestResult',
     iosIcon: eyedropOutline,
     mdIcon: eyedropSharp
   },
   {
-    title: 'Medication',
+    title: 'Prescription',
     url: '/page/Medication',
     iosIcon: bandageOutline,
     mdIcon: bandageSharp
-  },
-  {
-    title: 'Next visit',
-    url: '/page/NextVisit',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
   }
 ];
 
