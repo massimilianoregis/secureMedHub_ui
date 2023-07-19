@@ -11,8 +11,9 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bandageOutline, bandageSharp, bookmarkOutline, eyedropOutline, eyedropSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, speedometerOutline, speedometerSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { archiveOutline, archiveSharp, bandageOutline, bandageSharp, bookmarkOutline, eyedropOutline, eyedropSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, peopleCircle, peopleCircleOutline, peopleSharp, speedometerOutline, speedometerSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import './Menu.css';
+import { useUserContext } from '../context/UserContext';
 
 interface AppPage {
   url: string;
@@ -22,6 +23,12 @@ interface AppPage {
 }
 
 const appPages: AppPage[] = [
+  {
+    title: 'Status',
+    url: '/page/Status',
+    iosIcon: peopleCircleOutline,
+    mdIcon: peopleSharp    
+  },
   {
     title: 'Visits',
     url: '/page/PastVisit',
@@ -45,14 +52,15 @@ const appPages: AppPage[] = [
 const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
 const Menu: React.FC = () => {
+  const { user, updateUser } = useUserContext();
   const location = useLocation();
 
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
+          <IonListHeader>{user.name}</IonListHeader>
+          <IonNote>{user.email}</IonNote>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>

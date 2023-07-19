@@ -1,12 +1,23 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import { useParams } from 'react-router';
-import ExploreContainer from '../components/ExploreContainer';
-import './Page.css';
+import { businessOutline, calendarNumberOutline, callOutline, caretForwardOutline, closeOutline, readerOutline, refreshOutline } from 'ionicons/icons';
+import moment from 'moment-timezone';
+import Call, { Tests,Test } from '../calls/Tests';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useUserContext } from '../context/UserContext';
+import Skeleton from '../components/test/Skeleton';
+
 
 const Page: React.FC = () => {
-
+  const { user, updateUser } = useUserContext();
   const { name } = useParams<{ name: string; }>();
+  var [items,setItems] =useState<Test[]>([]);
 
+  useEffect(()=>{    
+    Call.getTests(user?.dataId||'').then(test=>{      
+      setItems(test)})
+  },[])
+  
   return (
     <IonPage>
       <IonHeader>
@@ -14,7 +25,7 @@ const Page: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Test result</IonTitle>
+          <IonTitle>Test</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -24,7 +35,21 @@ const Page: React.FC = () => {
             <IonTitle size="large">{name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name={name} />
+        
+        
+        {items.map((item, index) => {         
+            var name='../components/visit/Today'
+            if(item.type!='today') name='../components/test/Generic';
+            var Item=React.lazy(() => import(/* @vite-ignore */name))
+            
+            return (
+            <div key={index}>                         
+              <Suspense fallback={<Skeleton/>}>
+                <Item item={item}/>
+              </Suspense>            
+            </div>)
+          }
+          )}       
       </IonContent>
     </IonPage>
   );

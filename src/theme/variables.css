@@ -2,6 +2,10 @@
 http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
+ion-split-pane {  
+  --side-width: 100px;
+  }
+
 :root {
   /** primary **/
   --ion-color-primary: #ffc409;
