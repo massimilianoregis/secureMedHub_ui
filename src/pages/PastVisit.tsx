@@ -6,7 +6,6 @@ import moment from 'moment-timezone';
 import Call, { Visits,Visit } from '../calls/Visits';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useUserContext } from '../context/UserContext';
-import DynamicTag from '../components/DynamicTag';
 import Skeleton from '../components/visit/Skeleton';
 
 

@@ -7,7 +7,7 @@ const Warts: React.FC<{ item: Procedure }> = ({item}) => {
     return (
         <IonCard key={item.method}>
             <IonCardHeader>
-            <IonCardTitle>{item.method} #{item.number}</IonCardTitle>
+            <IonCardTitle>{item.method} for {item.number} lesion/s</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
             <li>{item.consent}</li>

@@ -23,6 +23,8 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { UserProvider } from './context/UserContext';
+import Patients from './pages/Patients';
+import Visit from './pages/Visit';
 
 setupIonicReact();
 
@@ -48,7 +50,13 @@ const App: React.FC = () => {
             </Route>
             <Route path="/page/Status" exact={true}>
               <Status />
-            </Route>          
+            </Route>
+            <Route path="/page/Patients" exact={true}>
+              <Patients />
+            </Route> 
+            <Route path="/page/Patient/:id" exact={true}>
+              <Visit />
+            </Route>           
           </IonRouterOutlet>
         </IonSplitPane>
         </UserProvider>
