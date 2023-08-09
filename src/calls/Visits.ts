@@ -34,7 +34,7 @@ export interface Procedure{
       return new Promise((ok,ko)=>{
       const options = {
         method: 'GET',
-        url: `/patient/${id}/visit`
+        url: `/2023-06/patient/${id}/visit`
       };
       axios.request(options)
         .then((response: AxiosResponse)  =>{

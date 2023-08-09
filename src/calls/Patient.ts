@@ -83,7 +83,7 @@ export interface PatientRange{
       return new Promise((ok,ko)=>{
       const options = {
         method: 'GET',
-        url: `/patient/${id}`
+        url: `/2023-06/patient/${id}`
       };      
       axios.request(options)
         .then((response: AxiosResponse)  =>{          
