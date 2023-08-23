@@ -7,6 +7,7 @@ export interface RangeValue{
   value:number
 }
 export interface PatientRange{
+  "id":string,
   "first_name":string,
   "last_name":string,
   "birth_date":string,
@@ -96,7 +97,7 @@ export interface PatientRange{
       return new Promise((ok,ko)=>{
       const options = {
         method: 'GET',
-        url: `/patient/${id}/ranges`
+        url: `/2023-06/patient/${id}/ranges`
       };      
       axios.request(options)
         .then((response: AxiosResponse)  =>{          

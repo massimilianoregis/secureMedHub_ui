@@ -2,12 +2,13 @@ import axios, { AxiosResponse } from 'axios';
 
 export interface Procedure{
     number:number,
-    method:string,
+    name:string,
     consent:string,
     post_care_instruction:string
   }
   export interface Assessment {
     name:string,
+    type:string,
     where?:string,
     expectations?:string,
     note:string,
@@ -29,7 +30,31 @@ export interface Procedure{
     visits:Visit[];
   }
 
+  export interface AssessmentSummary{
+    name:string
+    component?:string
+  }
+  
+  export interface VisitSummary{
+    name:string
+    assessments:AssessmentSummary[];
+    component?:string
+  }
   class Calls {
+    getVisitTypes():Promise<VisitSummary[]>{
+      return new Promise((ok,ko)=>{
+        const options = {
+          method: 'GET',
+          url: `/2023-06/visit`
+        };
+        axios.request(options)
+          .then((response: AxiosResponse)  =>{
+            
+            ok(response.data)
+          })
+          .catch(ko);
+        })
+    }
     getVisits(id:string): Promise<Visit[]>{      
       return new Promise((ok,ko)=>{
       const options = {
@@ -43,6 +68,49 @@ export interface Procedure{
         })
         .catch(ko);
       })
+    }
+
+    saveVisit(data:any){
+      return new Promise((ok,ko)=>{
+        const options = {
+          method: 'POST',
+          url: `/2023-06/${data.type}/visit`,
+          data:data
+        };
+        axios.request(options)
+          .then((response: AxiosResponse)  =>{            
+            ok(response.data)
+          })
+          .catch(ko);
+        })
+    }
+    saveAssessment(data:any){
+      return new Promise((ok,ko)=>{
+        const options = {
+          method: 'POST',
+          url: `/2023-06/${data.type}/assessment`,
+          data:data
+        };
+        axios.request(options)
+          .then((response: AxiosResponse)  =>{            
+            ok(response.data)
+          })
+          .catch(ko);
+        })
+    }
+    saveProcedure(data:any){
+      return new Promise((ok,ko)=>{
+        const options = {
+          method: 'POST',
+          url: `/2023-06/${data.type}/procedure`,
+          data:data
+        };
+        axios.request(options)
+          .then((response: AxiosResponse)  =>{            
+            ok(response.data)
+          })
+          .catch(ko);
+        })
     }
   }
 

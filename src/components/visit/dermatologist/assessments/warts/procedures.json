@@ -1,0 +1,6 @@
+[
+    {"name":"Cryoprocedure","component":"./visit/dermatologist/assessments/warts/procedures/cryoprocedure/Edit"},
+    {"name":"Laser","component":"./visit/dermatologist/assessments/warts/procedures/Laser"},
+    {"name":"Excision","component":"./visit/dermatologist/procedures/Excision/Edit"},
+    {"name":"Medication","component":"./visit/dermatologist/assessments/warts/procedures/Medication"}
+  ]

@@ -25,10 +25,17 @@ import './theme/variables.css';
 import { UserProvider } from './context/UserContext';
 import Patients from './pages/Patients';
 import Visit from './pages/Visit';
+import { useEffect } from 'react';
+import Login from './pages/Login';
 
 setupIonicReact();
 
 const App: React.FC = () => {
+
+  useEffect(()=>{    
+    console.log('app')    
+  },[])
+  
   return (    
     <IonApp>
       <IonReactRouter>
@@ -37,7 +44,7 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/folder/Inbox" />
+              <Redirect to="/page/PastVisit" />
             </Route>
             <Route path="/page/PastVisit" exact={true}>
               <PastVisit />
@@ -51,12 +58,15 @@ const App: React.FC = () => {
             <Route path="/page/Status" exact={true}>
               <Status />
             </Route>
-            <Route path="/page/Patients" exact={true}>
-              <Patients />
-            </Route> 
+            <Route path="/page/Visit" exact={true}>
+              <Visit />
+            </Route>
             <Route path="/page/Patient/:id" exact={true}>
               <Visit />
-            </Route>           
+            </Route>
+            <Route path="/page/Login" exact={true}>
+              <Login />
+            </Route>            
           </IonRouterOutlet>
         </IonSplitPane>
         </UserProvider>

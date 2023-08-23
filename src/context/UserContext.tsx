@@ -1,26 +1,10 @@
-import React, { createContext, useContext, useState } from 'react';
-interface User {
-  name: string;
-  dataId: string;
-  email:string;
-  admit(name:string):boolean
-}
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import Call, { User } from '../calls/User'
 
-
-const patient ={  
-    dataId:'9ed9754f-20a3-4dee-8bd7-19226cf5419b',
-    name:'max@gmail.com',
-    email:'mail@test.it',
-    features:{
-        'patient.status':{},
-        'patient.visits':{},          
-        'patient.tests':{},        
-        'patient.prescription':{},
-        'hospital.patients':{},      
+const patient ={      
+    features:{  
     },
-    role:[
-      "patients"
-    ],
+    role:[],
     admit:function(name:string){      
         return patient.features[name]!=null
     }
@@ -38,6 +22,21 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
   
 export const UserProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [user, setUser] = useState<User>(testUser);
+
+  useEffect(()=>{        
+    Call.getUserMe().then((user:any)=>{
+      console.log(user)
+      setUser({
+        ...user,
+        features:user.features||{"test.logins":true },
+        email:'email@email.com',
+        admit:function(name:string){      
+          return this.features[name]
+      }
+      });
+    })
+  },[])
+  
 
   const updateUser = (userData: User ) => {
     setUser(userData);

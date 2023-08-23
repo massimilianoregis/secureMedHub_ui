@@ -53,11 +53,18 @@ const appPages: AppPage[] = [
     mdIcon: bandageSharp
   },
   {
-    id:'hospital.patients',
-    title: 'Patients',
-    url: '/page/Patients',
+    id:'test.logins',
+    title: 'Logins',
+    url: '/page/Login',
     iosIcon: peopleOutline,
     mdIcon: peopleSharp
+  },
+  {
+    id:'hospital.visit',
+    title: 'Visit',
+    url: '/page/Visit',
+    iosIcon: heartOutline,
+    mdIcon: heartSharp
   }
 ];
 

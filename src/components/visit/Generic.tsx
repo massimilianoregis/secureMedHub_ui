@@ -3,6 +3,7 @@ import { Visit } from "../../calls/Visits";
 import { businessOutline, calendarNumberOutline, callOutline, closeOutline, refreshOutline } from "ionicons/icons";
 import moment from "moment-timezone";
 import React, { Suspense } from "react";
+import LazyComponent from "../LazyComponent";
 
 const Generic: React.FC<{ item: Visit }> = ({item}) => {
     return (
@@ -21,8 +22,7 @@ const Generic: React.FC<{ item: Visit }> = ({item}) => {
               
               <IonCard key='index'>
                 <IonCardHeader>
-                  <IonCardTitle>
-                                        
+                  <IonCardTitle>                                        
                       <IonLabel>{item.type}</IonLabel>
                     </IonCardTitle>
                   <IonCardSubtitle>{item.who}</IonCardSubtitle>
@@ -31,38 +31,8 @@ const Generic: React.FC<{ item: Visit }> = ({item}) => {
                 
                 <IonAccordionGroup>
                 {item.assessment?.map((assessment,index)=>
-                  <IonAccordion value={assessment.name} key={index}>
-                    <IonItem slot="header" color="light">
-                      <IonLabel>{assessment.name} - {assessment.where}</IonLabel>
-                    </IonItem>
-                      <div className="ion-padding" slot="content">
-                      <IonText color="secondary"><h2>Note</h2></IonText>
-                      <p>{assessment.note}</p>
-                      {assessment.expectations&&<>
-                        <IonText color="secondary"><h2>Expectations</h2></IonText>
-                        <p>{assessment.expectations}</p>
-                      </>}
-                      {assessment.contact_office_if&&<>
-                        <IonText color="secondary"><h2>Contact office if</h2></IonText>
-                        <p>{assessment.contact_office_if}</p>
-                      </>}
-                      {assessment.prescriptions&&<>
-                        <IonText color="secondary"><h2>Prescriptions</h2></IonText>
-                        {assessment.prescriptions?.join()}
-                      </>}                      
-                      {assessment.referrals&&<>
-                        <IonText color="secondary"><h2>Referrals</h2></IonText>
-                        {assessment.referrals?.join()}
-                      </>}                      
-                      {assessment.procedures&&<>
-                        <IonText color="secondary"><h2>Procedures</h2></IonText>
-                        {assessment.procedures?.map((procedure,index)=>{
-                            const Procedure = React.lazy(() => import(/* @vite-ignore */'./dermatology/Warts'));
-                            return (<Suspense fallback='loading'><Procedure item={procedure}/></Suspense>)}                                        
-                        )}
-                      </>}
-                      </div>
-                  </IonAccordion>
+                  <LazyComponent name={`./visit/${item.type}/assessments/${assessment.name.toLocaleLowerCase()}/View`} assessment={assessment}/>
+                  
                 )}
                 </IonAccordionGroup>
 

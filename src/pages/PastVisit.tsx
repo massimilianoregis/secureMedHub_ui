@@ -15,7 +15,7 @@ const Page: React.FC = () => {
   var [visits,setVisits] =useState<Visit[]>([]);  
 
   useEffect(()=>{    
-    Call.getVisits(user?.dataId||'').then(visit=>{
+    Call.getVisits(user?.id||'').then(visit=>{
       console.log(visit);
       setVisits(visit)})
   },[])
