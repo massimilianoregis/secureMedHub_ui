@@ -16,7 +16,7 @@ const Patients: React.FC = () => {
   const effectRan = useRef(false);
   useEffect(()=>{    
     if(effectRan.current) return;
-      Call.getTests(user?.dataId||'').then(test=>{      
+      Call.getTests(user?.id||'').then(test=>{      
         setItems(test)})
     return () => {effectRan.current = true;}
   },[])

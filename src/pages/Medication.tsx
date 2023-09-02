@@ -14,7 +14,7 @@ const Page: React.FC = () => {
   var [items,setItems] =useState<Prescription[]>([]);
 
   useEffect(()=>{    
-    Call.getPrescriptions(user?.dataId||'').then(test=>{      
+    Call.getPrescriptions(user?.id||'').then(test=>{      
       setItems(test)})
   },[])
   

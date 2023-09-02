@@ -14,7 +14,7 @@ const Page: React.FC = () => {
   var [items,setItems] =useState<Test[]>([]);
 
   useEffect(()=>{    
-    Call.getTests(user?.dataId||'').then(test=>{      
+    Call.getTests(user?.id||'').then(test=>{      
       setItems(test)})
   },[])
   
